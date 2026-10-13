@@ -28,7 +28,7 @@ const appState = {
 const money = (n,currency='ARS') => n == null ? 'Sin importe' : new Intl.NumberFormat('es-AR',{style:'currency',currency:currency||'ARS',maximumFractionDigits:0}).format(n);
 const dateFmt = s => new Intl.DateTimeFormat('es-AR',{day:'2-digit',month:'short'}).format(new Date(`${s}T12:00:00`));
 const statusMap = {paid:['Pagado','ok'], overdue:['Vencido','danger'], soon:['Próximo','warn'], pending:['Pendiente','neutral'], review:['Requiere revisión','review'], 'due-today':['Vence hoy','today']};
-const icon = (name) => ({home:'⌂', list:'≡', calendar:'□', file:'▱', pay:'✓', report:'↗', settings:'⚙'}[name] || '•');
+const icon = (name) => ({home:'⌂', list:'≡', calendar:'▦', file:'▱', pay:'✓', report:'↗', settings:'⚙'}[name] || '•');
 
 function nav(){
   const items=[['inicio','home','Inicio'],['documentos','file','Cargar impuesto'],['vencimientos','list','Vencimientos'],['calendario','calendar','Calendario'],['pagos','pay','Pagos'],['reportes','report','Reportes'],['configuracion','settings','Configuración']];
@@ -77,7 +77,7 @@ function settingsView(){const s=appState.settings;const granted='Notification' i
 
 function placeholder(){const names={calendario:'Calendario',documentos:'Documentos',pagos:'Pagos',reportes:'Reportes'};return `${top(names[appState.view]||'Control de Vencimientos')}<section class="panel placeholder"><span>${appState.view==='calendario'?'□':appState.view==='pagos'?'✓':'▱'}</span><h2>${names[appState.view]}</h2><p>Esta sección está preparada para conectar los datos reales de tus documentos.</p><button class="primary" id="uploadPlaceholder">＋ Cargar un impuesto</button></section>`}
 
-function mobileNav(){return `<div class="mobile-nav">${[['inicio','⌂','Inicio'],['vencimientos','≡','Vence.'],['upload','＋',''],['calendario','□','Calendario'],['configuracion','⚙','Ajustes']].map(([v,i,l])=>v==='upload'?`<button class="upload-fab" id="mobileUpload">${i}</button>`:`<button data-view="${v}" class="${appState.view===v?'active':''}"><span>${i}</span>${l}</button>`).join('')}</div>`}
+function mobileNav(){return `<div class="mobile-nav">${[['inicio','⌂','Inicio'],['vencimientos','≡','Vence.'],['upload','＋',''],['calendario','▦','Calendario'],['configuracion','⚙','Ajustes']].map(([v,i,l])=>v==='upload'?`<button class="upload-fab" id="mobileUpload">${i}</button>`:`<button data-view="${v}" class="${appState.view===v?'active':''}"><span>${i}</span>${l}</button>`).join('')}</div>`}
 function render(){let content=appState.view==='inicio'?dashboard():appState.view==='vencimientos'?recordsView():appState.view==='configuracion'?settingsView():placeholder();document.querySelector('#app').innerHTML=`${nav()}<main>${content}</main>${mobileNav()}<input hidden id="fileInput" type="file" accept="application/pdf,image/jpeg,image/png" capture="environment"><div id="modalRoot"></div><div id="toast"></div>`;bind();}
 
 function toast(msg){const el=document.querySelector('#toast');el.textContent=msg;el.classList.add('show');setTimeout(()=>el.classList.remove('show'),3200)}
