@@ -1,5 +1,5 @@
-const CACHE = 'impueston-v5';
-const ASSETS = ['/', '/index.html', '/manifest.webmanifest', '/impueston-icon.png', '/impueston-nav-logo.png'];
+const CACHE = 'impueston-v17';
+const ASSETS = ['/', '/index.html', '/manifest.webmanifest', '/impueston-logo.png'];
 
 self.addEventListener('install', event => {
   event.waitUntil(caches.open(CACHE).then(cache => cache.addAll(ASSETS)));

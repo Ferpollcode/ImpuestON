@@ -4,10 +4,10 @@
   "description": "Control de impuestos, servicios, alquileres y pagos",
   "start_url": "/",
   "display": "standalone",
-  "background_color": "#f4f5ef",
-  "theme_color": "#152e26",
+  "background_color": "#f4f7ff",
+  "theme_color": "#071d72",
   "lang": "es-AR",
   "icons": [
-    { "src": "/impueston-icon.png", "sizes": "512x512", "type": "image/png", "purpose": "any maskable" }
+    { "src": "/impueston-logo.png", "sizes": "1280x1280", "type": "image/png", "purpose": "any maskable" }
   ]
 }
