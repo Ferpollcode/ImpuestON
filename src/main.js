@@ -355,5 +355,8 @@ bind=function(){
  document.querySelectorAll('[data-toggle-recurring]').forEach(button=>button.onclick=event=>{event.preventDefault();event.stopPropagation();if(button.disabled)return;button.disabled=true;const obligation=obligations.find(item=>String(item.id)===String(button.dataset.toggleRecurring));if(!obligation)return;obligation.recurring=!obligation.recurring;const hasTemplate=appState.records.some(record=>record.obligation===obligation.name&&record.due);const generated=obligation.recurring&&hasTemplate?ensureMonthlyRecords():false;persistUserData();const message=!obligation.recurring?'Repetición mensual desactivada':!hasTemplate?'Mensual activado. Se repetirá después de cargar el primer vencimiento.':generated?'Mensual activado y vencimiento del mes actual creado.':'Mensual activado. El próximo aparecerá cuando comience el nuevo mes.';render();toast(message)});
 }
 
+function ensureHealthCategory(){document.querySelectorAll('select[name="category"]').forEach(select=>{if([...select.options].some(option=>option.value==='Salud'))return;const option=document.createElement('option');option.value='Salud';option.textContent='Salud';const other=[...select.options].find(item=>item.value==='Otro');other?select.insertBefore(option,other):select.append(option)})}
+const categoryOptionsObserver=new MutationObserver(ensureHealthCategory);categoryOptionsObserver.observe(document.querySelector('#app'),{childList:true,subtree:true});ensureHealthCategory();
+
 if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js');
 await startApp();
