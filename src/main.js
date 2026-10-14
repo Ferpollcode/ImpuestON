@@ -36,8 +36,18 @@ function nav(){
 }
 
 function top(title, subtitle='Todo bajo control, sin planillas.'){
-  const notificationCount=appState.records.filter(record=>record.status!=='paid').length;
+  const notificationCount=notificationItems().filter(item=>!notificationReads().has(item.notificationId)).length;
   return `<header class="top"><div><h1>${title}</h1><p>${subtitle}</p></div><div class="top-actions"><button class="notification-button" id="notifyBtn" type="button" aria-label="Notificaciones: ${notificationCount}"><span class="notification-bell" aria-hidden="true">♧</span><span class="notification-label">Notificaciones</span><strong class="notification-count">${notificationCount}</strong></button></div></header>`;
+}
+
+const notificationReadKey=()=>`impueston_${currentUser?.id||'local'}_notification_reads`;
+function notificationReads(){try{return new Set(JSON.parse(localStorage.getItem(notificationReadKey())||'[]'))}catch{return new Set()}}
+function notificationItems(){return appState.records.filter(record=>record.status!=='paid'&&record.due).map(record=>({...record,notificationId:`${record.id}:${record.status}:${record.due}`})).sort((a,b)=>a.due.localeCompare(b.due))}
+function saveNotificationReads(reads){localStorage.setItem(notificationReadKey(),JSON.stringify([...reads]))}
+function openNotifications(){
+ const items=notificationItems();const reads=notificationReads();const unread=items.filter(item=>!reads.has(item.notificationId)).length;
+ document.querySelector('#modalRoot').innerHTML=`<div class="modal-backdrop"><section class="modal notifications-modal"><button class="modal-close" data-close>×</button><span class="modal-kicker">CENTRO DE AVISOS</span><div class="notifications-title"><div><h2>Notificaciones</h2><p>${unread?`${unread} ${unread===1?'aviso sin leer':'avisos sin leer'}`:'Todo está leído'}</p></div>${unread?'<button class="outline" id="readAllNotifications">Marcar todas como leídas</button>':''}</div><div class="notifications-list">${items.length?items.map(item=>{const read=reads.has(item.notificationId);const overdue=item.due<iso(today);return `<article class="notification-item ${read?'is-read':''}"><span class="notification-dot"></span><div><b>${safe(item.obligation)}</b><p>${overdue?'Venció':'Vence'} el ${dateFmt(item.due)} · ${money(item.amount,item.currency)}</p></div>${read?'<span class="notification-read-label">Leída</span>':`<button class="outline" data-read-notification="${item.notificationId}">Marcar como leída</button>`}</article>`}).join(''):'<div class="empty-state"><b>No hay notificaciones</b><p>No tenés vencimientos pendientes.</p></div>'}</div></section></div>`;
+ document.querySelectorAll('[data-close]').forEach(button=>button.onclick=closeModal);document.querySelector('.modal-backdrop').onclick=event=>{if(event.target.classList.contains('modal-backdrop'))closeModal()};document.querySelectorAll('[data-read-notification]').forEach(button=>button.onclick=()=>{reads.add(button.dataset.readNotification);saveNotificationReads(reads);render();openNotifications()});document.querySelector('#readAllNotifications')?.addEventListener('click',()=>{items.forEach(item=>reads.add(item.notificationId));saveNotificationReads(reads);render();openNotifications()})
 }
 
 function stat(label,value,meta,kind){return `<article class="stat ${kind}"><div class="stat-icon">${kind==='money'?'$':kind==='danger'?'!':kind==='warn'?'◷':kind==='ok'?'✓':'?'}</div><div><span>${label}</span><strong>${value}</strong><small>${meta}</small></div></article>`}
@@ -320,6 +330,7 @@ async function startApp(){
 const monthlyRecurringBind=bind;
 bind=function(){
  monthlyRecurringBind();
+ const notificationsButton=document.querySelector('#notifyBtn');if(notificationsButton)notificationsButton.onclick=event=>{event.preventDefault();openNotifications()};
  document.querySelectorAll('[data-calendar-filter]').forEach(input=>input.onchange=()=>{appState.calendarFilters=[...document.querySelectorAll('[data-calendar-filter]:checked')].map(item=>item.dataset.calendarFilter);render()});
  document.querySelectorAll('[data-edit-record]').forEach(button=>button.onclick=event=>{event.preventDefault();event.stopPropagation();editRecord(button.dataset.editRecord)});
  document.querySelectorAll('[data-delete-record]').forEach(button=>button.onclick=event=>{event.preventDefault();event.stopPropagation();const index=appState.records.findIndex(item=>String(item.id)===String(button.dataset.deleteRecord));if(index<0||!confirm(`¿Eliminar ${appState.records[index].obligation} del período ${appState.records[index].period}?`))return;appState.records.splice(index,1);persistUserData();render();toast('Vencimiento eliminado')});
@@ -332,7 +343,7 @@ bind=function(){
   const obligation=obligations.find(item=>String(item.id)===String(anchor.dataset.toggleObligation));if(!obligation||anchor.parentElement.querySelector('[data-toggle-recurring]'))return;
   const button=document.createElement('button');button.type='button';button.className=`obligation-action recurring ${obligation.recurring?'active':''}`;button.dataset.toggleRecurring=obligation.id;button.textContent=obligation.recurring?'Mensual ✓':'Hacer mensual';button.title=obligation.recurring?'Desactivar repetición mensual':'Repetir automáticamente todos los meses';anchor.before(button);
  });
- document.querySelectorAll('[data-toggle-recurring]').forEach(button=>button.onclick=()=>{const obligation=obligations.find(item=>String(item.id)===String(button.dataset.toggleRecurring));if(!obligation)return;obligation.recurring=!obligation.recurring;if(obligation.recurring)ensureMonthlyRecords();persistUserData();render();toast(obligation.recurring?'Repetición mensual activada':'Repetición mensual desactivada')});
+ document.querySelectorAll('[data-toggle-recurring]').forEach(button=>button.onclick=event=>{event.preventDefault();event.stopPropagation();if(button.disabled)return;button.disabled=true;const obligation=obligations.find(item=>String(item.id)===String(button.dataset.toggleRecurring));if(!obligation)return;obligation.recurring=!obligation.recurring;const hasTemplate=appState.records.some(record=>record.obligation===obligation.name&&record.due);const generated=obligation.recurring&&hasTemplate?ensureMonthlyRecords():false;persistUserData();const message=!obligation.recurring?'Repetición mensual desactivada':!hasTemplate?'Mensual activado. Se repetirá después de cargar el primer vencimiento.':generated?'Mensual activado y vencimiento del mes actual creado.':'Mensual activado. El próximo aparecerá cuando comience el nuevo mes.';render();toast(message)});
 }
 
 if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js');
