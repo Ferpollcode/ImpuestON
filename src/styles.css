@@ -99,3 +99,11 @@ input:focus,select:focus,textarea:focus,#manualForm input:focus,#manualForm sele
 @media(max-width:1050px){.personal-expense-form{grid-template-columns:1fr}.expense-layout{grid-template-columns:1fr}.personal-expense-form form{grid-template-columns:repeat(3,1fr)}}
 @media(max-width:720px){.expense-toolbar,.summary-month{align-items:stretch;flex-direction:column}.expense-toolbar article,.summary-month>div{text-align:left}.personal-expense-form{padding:18px}.personal-expense-form form{grid-template-columns:1fr 1fr}.personal-expense-form button{grid-column:1/-1}.monthly-summary-grid{grid-template-columns:1fr}.expense-history table{min-width:720px}.expense-history .table-wrap{overflow-x:auto}}
 @media(max-width:450px){.personal-expense-form form{grid-template-columns:1fr}.personal-expense-form button{grid-column:auto}}
+
+/* Barra de atajos móvil con identidad de ImpuestON */
+@media(max-width:720px){
+ .mobile-nav{background:linear-gradient(135deg,#071f78,#0873ed);border-top:0;box-shadow:0 -8px 24px rgba(4,38,123,.22)}
+ .mobile-nav button,.mobile-nav .upload-fab{padding:6px 2px;border-radius:9px;color:rgba(255,255,255,.72)}
+ .mobile-nav button.active{background:rgba(255,255,255,.17);color:#fff;font-weight:800}
+ .mobile-nav .upload-fab{background:transparent;color:rgba(255,255,255,.72);box-shadow:none}
+}
