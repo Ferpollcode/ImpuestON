@@ -115,3 +115,19 @@ input:focus,select:focus,textarea:focus,#manualForm input:focus,#manualForm sele
 @media(max-width:380px){.mobile-nav button,.mobile-nav .upload-fab{font-size:9px}.mobile-nav button span,.mobile-nav .upload-fab span{font-size:18px}}
 @media(max-width:340px){.mobile-nav button,.mobile-nav .upload-fab{padding-inline:1px;font-size:8px}.mobile-nav button span,.mobile-nav .upload-fab span{font-size:17px}}
 @media(max-width:720px) and (max-height:500px){body{padding-bottom:78px}.mobile-nav{min-height:58px}.mobile-nav button,.mobile-nav .upload-fab{padding-block:4px}.mobile-nav button span,.mobile-nav .upload-fab span{font-size:17px}}
+
+/* Mantiene visible y completo el perfil al pie del menú lateral */
+@media(min-width:721px){
+ .sidebar{padding-bottom:max(14px,env(safe-area-inset-bottom));overflow:hidden}
+ .sidebar .brand,.sidebar .user{flex-shrink:0}
+ .sidebar nav{min-height:0;flex:1;overflow-y:auto;overscroll-behavior:contain;scrollbar-width:none}
+ .sidebar nav::-webkit-scrollbar{display:none}
+ .sidebar .user{margin-top:10px;padding:14px 6px 2px}
+}
+@media(min-width:721px) and (max-height:680px){
+ .sidebar{padding-top:16px}
+ .sidebar .brand{padding-bottom:14px}
+ .sidebar nav{gap:3px}
+ .sidebar nav button{padding-block:6px}
+ .sidebar .user{padding-top:10px}
+}
