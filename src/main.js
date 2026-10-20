@@ -29,7 +29,7 @@ const appState = {
 };
 
 const money = (n,currency='ARS') => n == null ? 'Sin importe' : new Intl.NumberFormat('es-AR',{style:'currency',currency:currency||'ARS',maximumFractionDigits:0}).format(n);
-const parseLocalAmount=value=>Number(String(value??'').replace(/[^\d,.-]/g,'').replace(/\./g,'').replace(',','.'))||0;
+const parseLocalAmount=value=>{if(typeof value==='number')return Number.isFinite(value)?value:0;const text=String(value??'').replace(/[^\d,.-]/g,'');if(!text)return 0;if(text.includes(','))return Number(text.replace(/\./g,'').replace(',','.'))||0;const dots=(text.match(/\./g)||[]).length;if(dots===1&&/^[-]?\d+\.\d{1,2}$/.test(text))return Number(text)||0;return Number(text.replace(/\./g,''))||0};
 const formatLocalAmount=value=>value===''?'':`$ ${new Intl.NumberFormat('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(parseLocalAmount(value))}`;
 const parseDateInput=value=>{const text=String(value||'').trim();if(/^\d{4}-\d{2}-\d{2}$/.test(text))return text;const match=text.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);return match?`${match[3]}-${match[2].padStart(2,'0')}-${match[1].padStart(2,'0')}`:''};
 const displayDateInput=value=>{const isoValue=parseDateInput(value);return isoValue?`${isoValue.slice(8,10)}/${isoValue.slice(5,7)}/${isoValue.slice(0,4)}`:''};
