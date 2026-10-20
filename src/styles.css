@@ -158,6 +158,7 @@ input:focus,select:focus,textarea:focus,#manualForm input:focus,#manualForm sele
 }
 
 /* Balance de ingresos y gastos */
+[data-money-input]{font-variant-numeric:tabular-nums;font-weight:700;color:#08245f!important}
 .finance-toolbar{align-items:stretch}.finance-toolbar>label{align-self:center}.finance-metrics{display:grid;grid-template-columns:repeat(3,minmax(145px,1fr));gap:12px;flex:1;max-width:720px}.finance-metrics article{padding:4px 16px;border-left:1px solid #ffffff3d;text-align:left}.finance-metrics strong{font-size:22px}.finance-balance.positive strong,.income-amount{color:#19d68d}.finance-balance.negative strong{color:#ffb8bd}.income-form{border-top:3px solid #0fbd78}.income-category{background:#ddf8eb;color:#087b50}.monthly-income-total{background:#e8faf2}.monthly-income-total strong,.monthly-balance.positive strong{color:#07945e}.monthly-balance{font-size:17px;font-weight:800}.monthly-balance.negative{background:#fff0f1}.monthly-balance.negative strong{color:#c63440}.monthly-balance.positive{background:#e8faf2}
 .income-breakdown h2:not(:first-child){margin-top:24px;padding-top:18px;border-top:2px solid var(--line)}
 @media(max-width:720px){.expense-tabs{overflow-x:auto}.expense-tabs button{min-width:max-content;flex:1}.finance-metrics{grid-template-columns:1fr 1fr;max-width:none}.finance-metrics .finance-balance{grid-column:1/-1}.finance-metrics article{padding:8px 10px;border-left:0;border-top:1px solid #ffffff3d}.income-history table{min-width:650px}}

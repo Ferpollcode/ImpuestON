@@ -29,8 +29,8 @@ const appState = {
 };
 
 const money = (n,currency='ARS') => n == null ? 'Sin importe' : new Intl.NumberFormat('es-AR',{style:'currency',currency:currency||'ARS',maximumFractionDigits:0}).format(n);
-const parseLocalAmount=value=>Number(String(value??'').replace(/\s/g,'').replace(/\./g,'').replace(',','.'))||0;
-const formatLocalAmount=value=>value===''?'':new Intl.NumberFormat('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(parseLocalAmount(value));
+const parseLocalAmount=value=>Number(String(value??'').replace(/[^\d,.-]/g,'').replace(/\./g,'').replace(',','.'))||0;
+const formatLocalAmount=value=>value===''?'':`$ ${new Intl.NumberFormat('es-AR',{minimumFractionDigits:2,maximumFractionDigits:2}).format(parseLocalAmount(value))}`;
 const parseDateInput=value=>{const text=String(value||'').trim();if(/^\d{4}-\d{2}-\d{2}$/.test(text))return text;const match=text.match(/^(\d{1,2})[\/-](\d{1,2})[\/-](\d{4})$/);return match?`${match[3]}-${match[2].padStart(2,'0')}-${match[1].padStart(2,'0')}`:''};
 const displayDateInput=value=>{const isoValue=parseDateInput(value);return isoValue?`${isoValue.slice(8,10)}/${isoValue.slice(5,7)}/${isoValue.slice(0,4)}`:''};
 const editableDateInput=(name,value='',required=false)=>`<span class="editable-date"><input name="${name}" class="date-text-input" inputmode="numeric" placeholder="dd/mm/aaaa" value="${displayDateInput(value)}" ${required?'required':''}><button type="button" class="date-picker-button" aria-label="Abrir calendario">📅</button><input class="date-native-picker" type="date" value="${parseDateInput(value)}" tabindex="-1" aria-label="Seleccionar fecha en calendario"></span>`;
