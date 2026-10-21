@@ -339,7 +339,7 @@ async function replaceCloudRows(table,rows){
 }
 async function syncCloudData(){
  if(!cloudReady||!supabase||!currentUser)return;
- obligations.forEach(ensureUuid);appState.records.forEach(ensureUuid);appState.documents.forEach(ensureUuid);appState.personalExpenses.forEach(ensureUuid);cacheCloudData();
+ obligations.forEach(ensureUuid);appState.records.forEach(ensureUuid);appState.documents.forEach(ensureUuid);appState.fuelEntries.forEach(ensureUuid);appState.personalExpenses.forEach(ensureUuid);cacheCloudData();
  const obligationByName=new Map(obligations.map(item=>[item.name,item.id]));
  await replaceCloudRows('obligations',obligations.map(item=>({id:item.id,user_id:currentUser.id,name:item.name,category:item.category,active:item.active!==false,notifications:item.notifications!==false,is_custom:Boolean(item.custom),recurring:Boolean(item.recurring),recurring_amount_mode:'pending'})));
  await replaceCloudRows('records',appState.records.map(item=>({id:item.id,user_id:currentUser.id,obligation_id:obligationByName.get(item.obligation)||null,obligation_name:item.obligation,category:item.category||'',period:item.period,due_on:item.due,issued_on:item.issued||null,paid_on:item.paid||null,amount:item.amount??null,total_amount:item.totalAmount??item.amount??null,currency:item.currency||'ARS',status:item.status||'pending',payment_method:item.paymentMethod||'',installment:item.installment||'',invoice:item.invoice||'',notes:item.notes||''})));
