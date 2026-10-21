@@ -222,3 +222,9 @@ input:focus,select:focus,textarea:focus,#manualForm input:focus,#manualForm sele
  .fuel-history .fuel-row-actions{gap:3px!important}.fuel-history .fuel-row-actions button{padding:5px!important;font-size:8px!important}
  .mobile-nav button,.mobile-nav .upload-fab{padding-inline:0!important}.mobile-nav button .mobile-nav-icon,.mobile-nav .upload-fab .mobile-nav-icon{font-size:14px!important}.mobile-nav button .mobile-nav-label,.mobile-nav .upload-fab .mobile-nav-label{font-size:6px!important}
 }
+@media(max-width:720px){
+ .mobile-nav{justify-content:flex-start!important;overflow-x:auto!important;overflow-y:hidden!important;scroll-snap-type:x proximity;scrollbar-width:none!important;-webkit-overflow-scrolling:touch}
+ .mobile-nav::-webkit-scrollbar{display:none!important}
+ .mobile-nav button,.mobile-nav .upload-fab{flex:0 0 calc(100vw / 5)!important;width:calc(100vw / 5)!important;max-width:calc(100vw / 5)!important;scroll-snap-align:center}
+ .mobile-nav button .mobile-nav-label,.mobile-nav .upload-fab .mobile-nav-label{font-size:8px!important;text-overflow:ellipsis!important}
+}
