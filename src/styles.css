@@ -228,3 +228,16 @@ input:focus,select:focus,textarea:focus,#manualForm input:focus,#manualForm sele
  .mobile-nav button,.mobile-nav .upload-fab{flex:0 0 calc(100vw / 5)!important;width:calc(100vw / 5)!important;max-width:calc(100vw / 5)!important;scroll-snap-align:center}
  .mobile-nav button .mobile-nav-label,.mobile-nav .upload-fab .mobile-nav-label{font-size:8px!important;text-overflow:ellipsis!important}
 }
+
+/* Menú lateral desplegable en móviles */
+.mobile-menu-toggle,.mobile-side-drawer,.mobile-drawer-backdrop{display:none}
+@media(max-width:720px){
+ body{padding-bottom:0!important}.mobile-nav{display:none!important}.top{padding-left:46px}
+ .mobile-menu-toggle{position:fixed;z-index:1002;display:grid;place-items:center;top:max(12px,env(safe-area-inset-top));left:12px;width:40px;height:40px;padding:0;border:1px solid #cbdcf5;border-radius:11px;background:#fff;color:#075bd8;font-size:22px;font-weight:800;box-shadow:0 7px 20px rgba(7,55,133,.2)}
+ .mobile-drawer-backdrop{position:fixed;z-index:1000;display:block;inset:0;background:rgba(2,15,51,.48);opacity:0;pointer-events:none;transition:opacity .2s ease}
+ .mobile-drawer-backdrop.open{opacity:1;pointer-events:auto}
+ .mobile-side-drawer{position:fixed;z-index:1001;display:flex;flex-direction:column;inset:0 auto 0 0;width:min(300px,84vw);padding:max(18px,env(safe-area-inset-top)) 14px max(18px,env(safe-area-inset-bottom));background:linear-gradient(180deg,#061b67,#075fdc);color:#fff;box-shadow:15px 0 40px rgba(2,21,70,.3);transform:translateX(-105%);transition:transform .22s ease;overflow-y:auto}
+ .mobile-side-drawer.open{transform:translateX(0)}body.mobile-menu-open{overflow:hidden}
+ .mobile-drawer-head{display:grid;grid-template-columns:42px 1fr 34px;align-items:center;gap:10px;padding:4px 4px 20px;border-bottom:1px solid rgba(255,255,255,.2)}.mobile-drawer-head img{width:42px;height:42px;border-radius:11px;object-fit:contain;background:#fff}.mobile-drawer-head b,.mobile-drawer-head small{display:block}.mobile-drawer-head b{font:800 18px Manrope}.mobile-drawer-head small{margin-top:2px;color:#c9ddff;font-size:10px}.mobile-drawer-head>button{width:34px;height:34px;padding:0;border:0;border-radius:9px;background:rgba(255,255,255,.14);color:#fff;font-size:24px}
+ .mobile-side-drawer nav{display:grid;gap:5px;padding-top:17px}.mobile-side-drawer nav button{display:flex;align-items:center;gap:13px;width:100%;padding:12px 14px;border:0;border-radius:10px;background:transparent;color:#eaf3ff;font-size:13px;font-weight:700;text-align:left}.mobile-side-drawer nav button span{display:grid;place-items:center;width:25px;font-size:19px}.mobile-side-drawer nav button.active{background:#fff;color:#0752bd;box-shadow:0 7px 20px rgba(0,0,0,.14)}.mobile-side-drawer nav button:hover{background:rgba(255,255,255,.15)}.mobile-side-drawer nav .mobile-drawer-upload{margin-top:7px;background:#09bc7b;color:#fff}
+}

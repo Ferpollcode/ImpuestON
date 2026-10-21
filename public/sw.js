@@ -1,4 +1,4 @@
-const CACHE = 'impueston-v22';
+const CACHE = 'impueston-v23';
 const ASSETS = ['/', '/index.html', '/manifest.webmanifest', '/impueston-logo.png'];
 
 self.addEventListener('install', event => {
