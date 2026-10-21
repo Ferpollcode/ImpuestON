@@ -209,8 +209,16 @@ input:focus,select:focus,textarea:focus,#manualForm input:focus,#manualForm sele
  .fuel-history td{box-sizing:border-box!important;display:grid!important;width:100%!important;max-width:100%!important;min-width:0!important;grid-template-columns:72px minmax(0,1fr)!important;overflow:hidden!important}
  .fuel-history td:before{min-width:0!important;max-width:72px!important}
  .fuel-history td>*{min-width:0!important;max-width:100%!important;overflow:hidden!important;text-overflow:ellipsis}
+ .fuel-history .fuel-value{display:block!important;grid-column:2!important;justify-self:end!important;color:#071f78!important;font-size:11px!important;font-weight:600!important;text-align:right!important;white-space:normal!important;visibility:visible!important;opacity:1!important}
  .fuel-history .fuel-primary{display:block!important;text-align:right}.fuel-history .fuel-primary b,.fuel-history .fuel-primary small{display:block;white-space:normal}
  .mobile-nav{display:flex!important;overflow:hidden!important;padding-inline:1px!important}
  .mobile-nav button,.mobile-nav .upload-fab{display:flex!important;flex:1 1 0!important;min-width:0!important;padding:5px 1px!important;font-size:6px!important;line-height:1.05!important;white-space:normal!important;overflow:hidden!important}
- .mobile-nav button span,.mobile-nav .upload-fab span{font-size:15px!important;line-height:1!important}
+ .mobile-nav button .mobile-nav-icon,.mobile-nav .upload-fab .mobile-nav-icon{display:block!important;font-size:15px!important;line-height:1!important}
+ .mobile-nav button small,.mobile-nav .upload-fab small{display:block!important;width:100%!important;min-height:8px!important;color:inherit!important;font-size:7px!important;font-weight:700!important;line-height:1!important;text-align:center!important;white-space:nowrap!important;overflow:hidden!important;text-overflow:clip!important;visibility:visible!important;opacity:1!important}
+}
+@media(max-width:380px){
+ main{padding-inline:8px!important}.fuel-history tbody{padding:5px!important}.fuel-history tr{padding:7px 8px!important}
+ .fuel-history td{grid-template-columns:64px minmax(0,1fr)!important;gap:5px!important;padding-block:5px!important}.fuel-history td:before{max-width:64px!important;font-size:7px!important}.fuel-history .fuel-value{font-size:10px!important}
+ .fuel-history .fuel-row-actions{gap:3px!important}.fuel-history .fuel-row-actions button{padding:5px!important;font-size:8px!important}
+ .mobile-nav button,.mobile-nav .upload-fab{padding-inline:0!important}.mobile-nav button .mobile-nav-icon,.mobile-nav .upload-fab .mobile-nav-icon{font-size:14px!important}.mobile-nav button small,.mobile-nav .upload-fab small{font-size:6px!important}
 }
