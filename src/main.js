@@ -471,6 +471,6 @@ bind=function(){
 function ensureExtraCategories(){document.querySelectorAll('select[name="category"]').forEach(select=>{['Salud','Tarjetas'].forEach(category=>{if([...select.options].some(option=>option.value===category))return;const option=document.createElement('option');option.value=category;option.textContent=category;const other=[...select.options].find(item=>item.value==='Otro'||item.value==='Otros');other?select.insertBefore(option,other):select.append(option)})})}
 const categoryOptionsObserver=new MutationObserver(ensureExtraCategories);categoryOptionsObserver.observe(document.querySelector('#app'),{childList:true,subtree:true});ensureExtraCategories();
 
-if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js');
+if('serviceWorker'in navigator)navigator.serviceWorker.register('/sw.js',{updateViaCache:'none'}).then(registration=>registration.update()).catch(error=>console.warn('No se pudo actualizar la aplicación',error));
 supabase?.auth.onAuthStateChange(event=>{if(event==='PASSWORD_RECOVERY'){passwordRecoveryActive=true;setTimeout(()=>resetPasswordScreen(),0)}});
 await startApp();
